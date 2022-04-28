@@ -1,3 +1,9 @@
 {
-    "esversion" : 6
+    "esversion" : 7,
+    "browser": true,
+    "camelcase": true,
+    "undef": true,
+    "devel": true,
+    "strict": true,
+    "maxlen": 120
 }
