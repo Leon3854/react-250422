@@ -2,145 +2,77 @@
 
 "use strict";
 
-/* let q = "w";
-let num = ['0w', '1w', '2w', '3w', '4.4'];
-for (let i = 0; i <= 4; i++) {
-    
-   // console.log(i + q);
-    console.log(num[i]);
-}
-
-*/
-
-// Создаём глобальную пременную  
-// Затем создаём функцию без аргументов в теле функции мы присваиваем значение 
-// глобальной пременной. Затем через цикл while пройдёмся и проверим не пустой или
-// не отменил и не буквами ввели ответ на первый вопрос
-// в данном этапе цикл while можно применить.
-let numberOfFilms;
-function start() {
-     numberOfFilms = +prompt('Сколько фильмов вы уже посмотрели?', '');
-
-     while(numberOfFilms == '' || numberOfFilms == null || isNaN(numberOfFilms)) {
-        numberOfFilms = +prompt('Сколько фильмов вы уже посмотрели?', '');
-     }
-}
-
-start();
 
 
 const personalMovieDB = {
-    count: numberOfFilms,
+    count: 0,
     movies: {},
     actors: {},
-    genres: {},
-    privat: false 
+    genres: [],
+    privat: false,
+		start:  function () {
+			personalMovieDB.count = +prompt('Сколько фильмов вы уже посмотрели?', '');
+ 
+			while(personalMovieDB.count == '' || personalMovieDB.count == null || isNaN(personalMovieDB.count)) {
+				personalMovieDB.count = +prompt('Сколько фильмов вы уже посмотрели?', '');
+			}
+		},
+		rememberMyFilms: function() {
+			for (let i = 0; i < 2; i++) {
+				const a = prompt('Один из последних просмотренных фильмов?', ''),
+							b = prompt('На скольно оцените его?', '');
+				if (a != null && b != null && a != '' && b != '' && a.length < 50) {
+						personalMovieDB.movies[a] = b;
+						console.log('done');
+				} else {
+						console.log('error');
+						i--; // Если будет не заплненная или клиент нажмёт "Ok" то нас вернёт на шаг назад
+				}
+			}
+	 },
+	 detectPersonalLevel: function() {
+		// В данном условии мы у пользователя спрашиваем  какое количество фильмов он смотрел
+		// в зависимости от ответа мы выводим определённый ответ.
+		if (personalMovieDB < 10) {
+				console.log("Просмотренно довольно мало фильмов");
+		} else if(personalMovieDB.count >= 10 && personalMovieDB.count < 30) {
+				console.log("Вы классический зритель");
+		} else if (personalMovieDB.count >= 30) {
+				console.log("Вы киноман!");
+		} else {
+				console.log('Произошла ошибка.');
+		}
+	},
+	showMyDB: function(hidden) {
+		if (!hidden) {
+			console.log(personalMovieDB);
+		}
+	},
+	toggleVisibleMyDB: function () {
+		if(personalMovieDB.privat) {
+			personalMovieDB.privat = false;
+		} else {
+			personalMovieDB.privat = true;
+		}
+	},
+	writeYourGenres: function() {
+		for (let i = 1; i <= 3; i++) {
+			let genre = prompt(`Ваш любимый жанр под номером ${i}`);
+
+			if (genre === '' || genre == null) {
+				console.log('You write not correct words or do you nothing write at all ');
+				i--;
+			} else {
+				personalMovieDB.genres[i - 1] = genre;
+			}
+		}
+		personalMovieDB.genres.forEach((item, i) => {
+			console.log(`My like genre ${i + 1} - this is ${item}`);
+		});
+	}
 };
 
-// We are closed this path code, becose we are do avtomatic process from цикл for 
-//const a = prompt('Один из последних просмотренных фильмов?', ''),
-  //    b = prompt('На скольно оцените его?', ''),
-  //   c = prompt('Один из последних просмотренных фильмов?', ''),
-  //   d = prompt('На скольно оцените его?', '');
-
-// personalMovieDB.movies[a] = b;
-// personalMovieDB.movies[c] = d;
-// Finish Path 1 
 
 
-
-// Создадим фунцуию в которой будем вызывать ранне созданный цикл по требованию
-function rememberMyFilms() {
-    // Start Path 2 Oure project from 27042022
-
-// Почему i не больше 2? Потому что у нас всего два вопроса для пользователя.
-// Для этого мы помещаем в тело цикла константу с вопросами для наших клиентов
-    for (let i = 0; i < 2; i++) {
-        const a = prompt('Один из последних просмотренных фильмов?', ''),
-            b = prompt('На скольно оцените его?', '');
-
-// Мы пишем условие в котором проверим на то что строка не пустая и длина строки
-// не привышает 50 символов. Данное условие до словно будет звучать так!
-// Если премнная "а" не была пропушенна И переменная "б" тоже не пропущенна И переменная "а"
-// не пуста И переменная "б" не пуста И длина переменной "а" меньше 50 символов
-// тогда полученные ответы переносим в объект personalMovieDB и записываем в свойстве с "ключом"
-// moies и "значение" тем что внёс пользователь через окно запроса,
-// так же мы переменную "а" мы вносим в массив и присваиваем значение пременной "б".
-// А в случае не выполнения первого и самого основного условия будет в консоль
-// выводиться ошибка и нас будет возвращать на один шаг назад через "дикремент"
-// тоесть нас вернёт на прежнее окно запроса!!!             
-        if (a != null && b != null && a != '' && b != '' && a.length < 50) {
-            personalMovieDB.movies[a] = b;
-            console.log('done');
-        } else {
-            console.log('error');
-            i--;
-        }
-    }
-}
-// Вызываем нашу функцию
-
-rememberMyFilms();
-
-
-
-
-// Создаём ещё одну функцию для того что бы проверить уровент вовлечения нашего пользователя
-// в киноиндустрию
-function detectPersonalLevel() {
-    // В данном условии мы у пользователя спрашиваем  какое количество фильмов он смотрел
-    // в зависимости от ответа мы выводим определённый ответ.
-    if (personalMovieDB < 10) {
-        console.log("Просмотренно довольно мало фильмов");
-    } else if(personalMovieDB.count >= 10 && personalMovieDB.count < 30) {
-        console.log("Вы классический зритель");
-    } else if (personalMovieDB.count >= 30) {
-        console.log("Вы киноман!");
-    } else {
-        console.log('Произошла ошибка.');
-    }
-}
-// Вызываем данную функцию 
-detectPersonalLevel();
-
-//  Зачем мы это сделали? Для того что бы мы могли вызвать данные 
-//  функции в любом месте так как они глобальны
-
-// В данной функции мы пропишем что изночально personalMovieDB у нас
-// будет скрыт (в аргументе)
-// но в услов мы напишем что мы будем изночально будем от отрицания 
-//  Если в personalMovieDB свойство private: будет в значении false 
-//  то тогда наши значения hidden
-//  мы тут играем от обратного - тоесть мы если в аргументе у нас 
-//  стоит hidden то в услвии мы будем 
-//
-
-function showMyDB(hidden) {
-
-    if (!hidden) {
-        console.log(personalMovieDB);
-    }
-
-}
-
-showMyDB(personalMovieDB.privat);
-
-// Создаём функцию без аргументов
-// через цикл for мы задаём начала счётчика с 1 и не больше 3 по условию задания
-// далее создаём константу в теле цикла куда занесём ответ от пользователя в виде 
-// номера от 1 до включительно 3 который мы так же должны внести в свойство объекта
-// personalMovieDB.genres[i - 1] = gener-"жанр". Почему i-1 потому что у нас счётчик начинатся 
-// с 1 по этой причине нам надо отнять еденицу для того что бы было правильно.
-//
-
-function writeYourGenres() {
-    for (let i = 1; i <= 3; i++) {
-        const genre = prompt(`Ваш любимый жанр под номером ${i}`);
-        personalMovieDB.genres[i - 1] = genre;
-    }
-}
-
-// вызовем данную фунцкцию
-writeYourGenres();
 
 
